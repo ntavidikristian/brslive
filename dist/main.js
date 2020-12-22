@@ -32,16 +32,9 @@ class RestService {
         this.http = http;
         this.endpoint = "https://bug-report-system-server.herokuapp.com/bugs";
     }
-    //get and object of key values and returs it as a sting of query params
-    getQueryparamsString(attrs) {
-        return Object.keys(attrs).map((key) => {
-            return key + "=" + attrs[key];
-        }).join('&');
-    }
     //get all bugs givven the attibutes 'attrs'
     getAllBugs(attrs) {
-        let query = this.endpoint + '?' + this.getQueryparamsString(attrs);
-        return this.http.get(query, { observe: 'response' });
+        return this.http.get(this.endpoint, { observe: 'response', params: attrs });
     }
     //post a bug to server
     postBug(bug) {
@@ -1158,7 +1151,7 @@ class BugsListComponent {
         //valid reporter values (search from)
         this.reporterValues = ['QA', 'PO', 'DEV'];
         //valid status values (search form)
-        this.statusValues = ['Ready for Testing', 'Done', 'Rejected'];
+        this.statusValues = ['Ready for testing', 'Done', 'Rejected'];
         // the filter we want the bugs to be ordered by
         this._filterBy = this.filters.createdAt;
         //flag that indicates if we are loading bugs to table
